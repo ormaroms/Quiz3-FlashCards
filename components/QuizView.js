@@ -19,6 +19,17 @@ export default class QuizView extends React.Component {
         correctAnswers: 0
   }
 
+  resetState(){
+    this.setState(()=>{
+      return{
+        questions: this.props.navigation.state.params.deck.questions,
+        questionIndex: 0,
+        isShowAnswer: false,
+        correctAnswers: 0
+    }})
+      this.notificationReset();
+  }
+
   questionsView() {
     if (this.state.questionIndex < this.state.questions.length) {
       return (
@@ -71,6 +82,11 @@ export default class QuizView extends React.Component {
         <Button title="Choose another quiz" onPress={() => {
           this.notificationReset()
           this.props.navigation.navigate('AllDecks')}} buttonStyle={styles.button}/>
+        <Button title="Restart Quiz" onPress={() => {
+          this.resetState()}} buttonStyle={styles.button}/>
+          <Button title="Back to deck" onPress={() => {
+          this.resetState()
+          this.props.navigation.dispatch(NavigationActions.back())}} buttonStyle={styles.button}/>
       </View>
     ); }
   }
